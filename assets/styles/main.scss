@@ -1,0 +1,141 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+$font: 'satoshi';
+@font-face {
+  font-family: $font;
+  src:
+    url('../fonts/#{$font}.woff2') format('woff2'),
+    url('../fonts/#{$font}.woff') format('woff'),
+    url('../fonts/#{$font}.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+$fontItalic: 'satoshi-italic';
+@font-face {
+  font-family: $fontItalic;
+  src:
+    url('../fonts/#{$fontItalic}.woff2') format('woff2'),
+    url('../fonts/#{$fontItalic}.woff') format('woff'),
+    url('../fonts/#{$fontItalic}.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: italic;
+}
+
+@layer utilities {
+  .flx-center {
+    @apply flex items-center justify-center;
+  }
+
+  .absolute-center {
+    @apply absolute inset-0;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+html {
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-primary/20;
+  }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-primary/20;
+  }
+}
+
+
+*::selection {
+  @apply bg-primary/20 text-white/80;
+}
+
+h1 {
+  @apply text-center text-4xl font-black;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-balance;
+}
+
+button,
+img {
+  @apply select-none;
+}
+
+button,
+input[type='submit'] {
+  @apply cursor-pointer;
+}
+
+textarea {
+  resize: none;
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.primary') transparent;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    border-radius: 999px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: theme('colors.primary');
+    border-radius: 999px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.tab,
+[tabindex] {
+  @apply outline outline-offset-4 outline-transparent;
+
+  &:focus-visible {
+    @apply outline-primary;
+  }
+}
