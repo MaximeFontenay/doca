@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   css: ['@/assets/styles/main.scss'],
 
   imports: {
-    dirs: ['types/*.d.ts', 'store/*.ts', 'types/**/*.ts'],
+    dirs: ['types/*.d.ts', 'store/*.ts', 'types/**/*.ts', 'utils/**/*.ts'],
   },
   devtools: { enabled: true },
 
@@ -39,6 +39,11 @@ export default defineNuxtConfig({
   //     stylistic: true,
   //   },
   // },
+
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
+
   image: {
     quality: 100,
     format: ['webp', 'png', 'jpg', 'jpeg'],

@@ -35,6 +35,22 @@ const steps = [
     name: 'Informations du client',
   },
 ]
+
+const changeStep = (step: number) => {
+  currentStep.value = step
+  localStorage.setItem('currentStep', JSON.stringify(step))
+}
+
+onMounted(() => {
+  const savedStep = localStorage.getItem('currentStep')
+  if (savedStep) {
+    currentStep.value = JSON.parse(savedStep)
+  }
+})
+
+const clearLocalStorage = () => {
+  localStorage.clear()
+}
 </script>
 
 <template>
@@ -42,15 +58,22 @@ const steps = [
     <section class="bg-gray-50 dark:bg-gray-800 p-4 flex items-center flex-col w-full min-w-52 max-w-60">
       <h1>DOCA</h1>
       <ol class="mt-10 flex jsutify-center flex-col gap-4 w-full">
-        <li v-for="step in steps" :key="step.id" @click="currentStep = step.id">
-          <UBadge :label="step.name" :variant="currentStep === step.id ? 'solid' : 'soft'" size="md"
-            class="w-full text-center flx-center cursor-pointer py-2 duration-200" tabindex="0" />
+        <li v-for="step in steps" :key="step.id">
+          <UBadge @click="changeStep(step.id)" :label="step.name" :variant="currentStep === step.id ? 'solid' : 'soft'"
+            size="md" class="w-full text-center flx-center cursor-pointer py-2 duration-200" tabindex="0" />
         </li>
       </ol>
-      <div class="mt-auto mr-auto">
+      <div class="flex justify-between items-stretch w-full mt-auto">
         <ClientOnly>
           <UButton :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'" aria-label="Theme"
             @click="isDark = !isDark" />
+          <template #fallback>
+            <div class="w-8 h-8" />
+          </template>
+        </ClientOnly>
+
+        <ClientOnly>
+          <UButton icon="i-heroicons-trash-solid'" aria-label="Theme" @click="clearLocalStorage" />
           <template #fallback>
             <div class="w-8 h-8" />
           </template>
