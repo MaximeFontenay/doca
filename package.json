@@ -27,6 +27,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.22.0",
     "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
+    "@sidebase/nuxt-pdf": "1.0.0-alpha.0",
     "eslint": "^9.6.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",

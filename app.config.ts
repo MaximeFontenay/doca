@@ -11,7 +11,7 @@ export default defineAppConfig({
     input: {
       default: { variant: 'outline', color: 'primary' },
       placeholder:
-        'placeholder:text-xs placeholder:text-gray-600 dark:placeholder:text-gray-400',
+        'placeholder:select-none placeholder:text-xs placeholder:text-gray-600 dark:placeholder:text-gray-400',
       file: {
         base: 'file:text-gray-500 dark:file:text-gray-400',
       },
@@ -40,6 +40,7 @@ export default defineAppConfig({
       },
     },
     badge: {
+      base: 'select-none',
       default: {
         variant: 'soft',
         color: 'primary',

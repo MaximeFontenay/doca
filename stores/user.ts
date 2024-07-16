@@ -1,6 +1,6 @@
 import { type UserInformations } from 'types/userInformationsType'
 
-export const useUserInformationsStore = defineStore('userInformations', () => {
+export const useUserStore = defineStore('userStore', () => {
   const informations: UserInformations = reactive<UserInformations>({
     name: '',
     firstname: '',

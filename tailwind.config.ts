@@ -50,7 +50,8 @@ export default <Partial<Config>>{
         1: '.01',
       },
       fontSize: {
-        xxxs: '9px',
+        xxxs: ['0.6rem', '0.65rem'],
+        xxs: ['0.75rem', '0.85rem'],
       },
       fontFamily: {
         satoshi: ['satoshi', 'system-ui', 'sans-serif'],

@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@nuxt/ui',
+    '@sidebase/nuxt-pdf',
   ],
   colorMode: {
     preference: 'dark',
