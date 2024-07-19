@@ -1,4 +1,4 @@
-export interface UserInformations {
+export interface UserDatas {
   name: string
   firstname: string
   email: string

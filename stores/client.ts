@@ -1,7 +1,7 @@
-import { type ClientInformations } from 'types/clientInformationsType'
+import { type ClientDatas } from 'types/clientType'
 
 export const useClientStore = defineStore('clientStore', () => {
-  const informations: ClientInformations = reactive<ClientInformations>({
+  const datas: ClientDatas = reactive<ClientDatas>({
     name: '',
     email: '',
     address: {
@@ -16,5 +16,5 @@ export const useClientStore = defineStore('clientStore', () => {
     },
   })
 
-  return { informations }
+  return { datas }
 })

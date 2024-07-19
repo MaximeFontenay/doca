@@ -51,5 +51,23 @@ export default defineAppConfig({
         soft: 'bg-{color}-50 text-{color}-300 dark:bg-{color}-400 dark:bg-opacity-10 dark:text-{color}-400',
       },
     },
+    table: {
+      strategy: 'override',
+      th: {
+        base: 'whitespace-nowrap',
+        padding: 'px-4 py-3.5',
+        color: 'text-primary',
+        font: 'font-semibold',
+        size: 'text-xxs',
+      },
+      td: {
+        base: 'whitespace-nowrap',
+        padding: 'px-4 py-4',
+        color: 'text-[#1f1f1f]',
+        font: '',
+        size: 'text-xxs',
+      },
+      tbody: 'divide-none',
+    }
   },
 })

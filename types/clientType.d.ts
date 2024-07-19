@@ -1,4 +1,4 @@
-export interface ClientInformations {
+export interface ClientDatas {
   name: string
   email: string
   address: {

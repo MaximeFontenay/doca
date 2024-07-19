@@ -17,6 +17,7 @@ export default <Partial<Config>>{
           DEFAULT: '#1D1D1D',
           100: '#2C2C2C',
           200: '#212121',
+          300: '#808080',
         },
         custom: {
           50: '#eef0ff',
@@ -31,7 +32,6 @@ export default <Partial<Config>>{
           900: '#2e3681',
           950: '#1b1f4b',
         },
-
         green: {
           50: '#EFFDF5',
           100: '#D9FBE8',
@@ -44,6 +44,19 @@ export default <Partial<Config>>{
           800: '#016538',
           900: '#0A5331',
           950: '#052e16',
+        },
+        orange: {
+          50: '#fff5ed',
+          100: '#ffe8d5',
+          200: '#fed0aa',
+          300: '#fdb274',
+          400: '#fb923c',
+          500: '#f97c16',
+          600: '#ea700c',
+          700: '#c25e0c',
+          800: '#9a4f12',
+          900: '#7c4212',
+          950: '#432207',
         },
       },
       opacity: {
