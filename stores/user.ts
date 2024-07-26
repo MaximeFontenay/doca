@@ -5,13 +5,13 @@ export const useUserStore = defineStore('userStore', () => {
     name: '',
     firstname: '',
     email: '',
-    phone: null,
+    phone: '',
     address: {
       street: '',
       city: '',
-      postalCode: null,
+      postalCode: '',
     },
-    siret: null,
+    siret: '',
     website: '',
     logo: '',
   })

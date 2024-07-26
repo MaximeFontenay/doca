@@ -22,6 +22,7 @@ const isDark = computed({
 const contractStore = useContractStore();
 const clientStore = useClientStore();
 const userStore = useUserStore();
+const prestationStore = usePrestationStore();
 
 const loaded = ref<boolean>(false)
 
@@ -77,6 +78,7 @@ onMounted(() => {
   loadFromLocalStorage(contractStore, 'contractStore');
   loadFromLocalStorage(clientStore, 'clientStore');
   loadFromLocalStorage(userStore, 'userStore');
+  loadFromLocalStorage(prestationStore, 'prestationStore');
 
   loaded.value = true
 })

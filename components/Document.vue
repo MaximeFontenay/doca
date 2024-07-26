@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 const userStore = useUserStore()
 const clientStore = useClientStore()
 const contractStore = useContractStore()
+const prestationStore = usePrestationStore();
 
 const PDFDocument = ref<HTMLElement | null>(null)
 
@@ -51,15 +52,15 @@ const works = [
     id: 1,
     work: 'Modification front d’une in-app Braze:',
     hours: '2',
-    unitPrice: '42€',
-    totalPrice: '84€'
+    unitPrice: '42&nbsp;€',
+    totalPrice: '84&nbsp;€'
   },
   {
     id: 2,
     work: 'Livrables',
     hours: '1',
-    unitPrice: '42€',
-    totalPrice: '42€'
+    unitPrice: '42&nbsp;€',
+    totalPrice: '42&nbsp;€'
   },
 ]
 
@@ -85,7 +86,7 @@ const documentColor = computed(() => contractStore.datas.color);
       <div class="flex flex-col gap-1">
       </div>
       <div class="flex flex-col items-end gap-1">
-        <p>Facture N°{{ contractStore.datas.number }}</p>
+        <p>{{ contractStore.datas.type }} N°{{ contractStore.datas.number }}</p>
         <p>{{ getContractDate() }}</p>
       </div>
     </div>
@@ -127,36 +128,40 @@ const documentColor = computed(() => contractStore.datas.color);
     </div>
 
     <!-- prestations -->
-    <!-- TODO: IL FAUT UTILISER LES SLOTS AFIN DE CORRECTEMENT STYLISER LES ELEMENTS, SIZES / COLORS -->
-    <UTable :columns="columns" :rows="works" :ui="{
-      th: {
-        color: `text-[${documentColor}]`,
-      },
-    }">
-      <template #default="{ columns, rows }">
-        <thead>
-          <tr>
-            <th v-for="column in columns" :key="column.key"
-              :class="['whitespace-nowrap px-4 py-3.5 font-semibold text-xxs', `text-[${documentColor.value}]`]">
-              {{ column.label }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="row in rows" :key="row.id">
-            <td v-for="column in columns" :key="column.key"
-              :class="['whitespace-nowrap px-4 py-4 text-[#1f1f1f] text-xxs']">
-              {{ row[column.key] }}
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </UTable>
+    <table class="w-full">
+      <thead class="border-b-2" :style="{ borderColor: contractStore.datas.color }">
+        <tr :style="{ color: contractStore.datas.color }">
+          <th class="cell-title">DESIGNATION DE LA PRESTATION </th>
+          <th class="cell-title">{{ prestationStore.getUnitLabel() }}</th>
+          <th class="cell-title">PRIX UNITAIRES</th>
+          <th class="cell-title">PRIX TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(prestation, prestationIndex) in prestationStore.datas.prestations" :key="prestationIndex">
+          <td class="cell !text-left">
+            <h3 class="font-bold underline mb-1">{{ prestation.name }}</h3>
+            <ul class="pl-6 list-disc">
+              <li v-for="(detail, detailIndex) in prestation.details" :key="detailIndex">{{ detail }}</li>
+            </ul>
+          </td>
+          <td class="cell">{{ prestation.quantity }}
+          </td>
+          <td class="cell">
+            {{ prestation.price ? prestation.price : 0 }}&nbsp;€</td>
+          <td class="cell">
+            {{ prestation.price && prestation.quantity ? parseInt(prestation.price) * parseInt(prestation.quantity) : 0
+            }}&nbsp;€</td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- total -->
     <div class="w-full flex justify-end mt-6">
-      <div class="flex flex-col items-center gap-2 border-t border-primary pt-2 px-4">
-        <p><span class="font-black text-primary mr-4">TOTAL (EN EUROS HT)</span> 126€</p>
+      <div class="flex flex-col items-center gap-2 border-t  pt-2 px-4"
+        :style="{ borderColor: contractStore.datas.color }">
+        <p><span class="font-black text-primary mr-2" :style="{ color: contractStore.datas.color }">TOTAL (EN EUROS
+            HT)</span> {{ prestationStore.getTotal() }}&nbsp;€</p>
         <p class="text-xxxs text-dark-300">TVA non applicable, art. 293 B du CGI</p>
       </div>
     </div>
@@ -175,5 +180,13 @@ const documentColor = computed(() => contractStore.datas.color);
 <style lang="scss" scoped>
 .board {
   aspect-ratio: 21/29.7;
+}
+
+.cell {
+  @apply text-center align-top whitespace-nowrap py-3 px-2 text-[#1f1f1f] text-xxs font-semibold;
+}
+
+.cell-title {
+  @apply whitespace-nowrap px-2 pb-1 font-bold text-xxs uppercase;
 }
 </style>

@@ -57,7 +57,6 @@ const saveToLocalStorage = () => {
         <input type="color" v-model="contractStore.datas.color"
           class="flx-center h-8 outline outline-solid outline-1 -outline-offset-[4.5px] appearance-none bg-transparent cursor-pointer rounded-md overflow-clip px-0.5 -ml-0.5 w-[calc(100%+5px)] focus-visible:outline-primary"
           @blur="saveToLocalStorage" />
-
       </UFormGroup>
     </div>
   </div>

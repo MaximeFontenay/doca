@@ -2,13 +2,13 @@ export interface UserDatas {
   name: string
   firstname: string
   email: string
-  phone: number | null
+  phone: string
   address: {
     street: string
     city: string
-    postalCode: number | null
+    postalCode: string
   }
-  siret: number | null
+  siret: string
   website: string
   logo: string
 }

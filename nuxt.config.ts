@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['types/*.d.ts', 'store/*.ts', 'types/**/*.ts', 'utils/**/*.ts'],
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   modules: [
     '@nuxt/image',

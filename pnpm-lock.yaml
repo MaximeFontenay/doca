@@ -45,6 +45,9 @@ importers:
       '@antfu/eslint-config':
         specifier: ^2.22.0
         version: 2.22.4(@vue/compiler-sfc@3.4.31)(eslint@9.7.0)(typescript@5.5.3)
+      '@iconify-json/ph':
+        specifier: ^1.1.13
+        version: 1.1.13
       '@nuxt/ui':
         specifier: npm:@nuxt/ui-edge@latest
         version: '@nuxt/ui-edge@2.17.0-28685592.e2881d3(magicast@0.3.4)(rollup@4.18.1)(vite@5.3.4(@types/node@20.14.10)(sass@1.77.8)(terser@5.31.2))(vue@3.4.31(typescript@5.5.3))'
@@ -834,6 +837,9 @@ packages:
 
   '@iconify-json/heroicons@1.1.22':
     resolution: {integrity: sha512-UNfSBdD/JBYBvFFhce6e3FsmeqshGz8u964R36npJvIzuORhIHUXrFerulBWFmbG0V1xvMqLZVZc4bPyjP5p7A==}
+
+  '@iconify-json/ph@1.1.13':
+    resolution: {integrity: sha512-xtM4JJ63HCKj09WRqrBswXiHrpliBlqboWSZH8odcmqYXbvIFceU9/Til4V+MQr6+MoUC+KB72cxhky2+A6r/g==}
 
   '@iconify/collections@1.0.440':
     resolution: {integrity: sha512-W5H8DTj+psJxRXh5KKTN2V3XJBTmldzDlwJF7QygGR5qqRneAc5IlTXShuoSBJEj7oH3Iosd2Q6wUjNiJS4d7w==}
@@ -5989,6 +5995,10 @@ snapshots:
   '@humanwhocodes/retry@0.3.0': {}
 
   '@iconify-json/heroicons@1.1.22':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/ph@1.1.13':
     dependencies:
       '@iconify/types': 2.0.0
 
