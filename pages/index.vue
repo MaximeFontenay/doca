@@ -114,20 +114,26 @@ const toggleSidebar = () => {
           </ol>
           <div class="flex gap-4 mt-auto mr-auto" :class="{ 'flex-col-reverse': foldedSidebar }">
             <ClientOnly>
-              <UButton :icon="foldedSidebar ? 'i-ph-arrow-right' : 'i-ph-arrow-left'" aria-label="Toggle panel"
-                @click="toggleSidebar" />
+              <UTooltip :text="foldedSidebar ? 'Déplier le panneau' : 'Replier le panneau'">
+                <UButton :icon="foldedSidebar ? 'i-ph-arrow-right' : 'i-ph-arrow-left'" aria-label="Toggle panel"
+                  @click="toggleSidebar" />
+              </UTooltip>
             </ClientOnly>
             <ClientOnly>
-              <UButton :icon="isDark ? 'i-ph-moon' : 'i-ph-sun'" aria-label="Toggle dark & light mode"
-                @click="isDark = !isDark" />
+              <UTooltip :text="isDark ? 'Activer le thème clair' : 'Activer le thème sombre'">
+                <UButton :icon="isDark ? 'i-ph-moon' : 'i-ph-sun'" aria-label="Toggle dark & light mode"
+                  @click="isDark = !isDark" />
+              </UTooltip>
             </ClientOnly>
             <ClientOnly>
-              <UButton icon="i-ph-trash" aria-label="Clean local storage" @click="clearLocalStorage" />
+              <UTooltip text="Supprimer tous les champs">
+                <UButton icon="i-ph-trash" aria-label="Clean local storage" @click="clearLocalStorage" />
+              </UTooltip>
             </ClientOnly>
           </div>
         </section>
         <section
-          class="relative z-20 duration-500 bg-gray-50 dark:bg-gray-800 border-l border-primary-400/20 pt-8 pb-4 px-6 flex items-center flex-col w-full min-w-64 max-w-96 max-h-svh overflow-y-auto custom-scrollbar">
+          class="relative z-20 duration-500 bg-gray-50 dark:bg-gray-800 border-x border-primary-400/20 pt-8 pb-4 px-6 flex items-center flex-col w-full min-w-64 max-w-96 max-h-svh overflow-y-auto shadow-2xl custom-scrollbar">
           <KeepAlive>
             <StepsContrat v-show="currentStep === 1" />
           </KeepAlive>
@@ -144,7 +150,7 @@ const toggleSidebar = () => {
             <UButton label="Suivant" variant="ghost" class="mt-4" @click="currentStep++" />
           </div>
         </section>
-        <section class="relative z-30 duration-500 bg-gray-300 dark:bg-gray-900 p-4 flx-center flex-col flex-grow">
+        <section class="relative z-30 duration-500 bg-gray-300 dark:bg-gray-900 flx-center flex-col flex-grow">
           <Document />
         </section>
       </div>

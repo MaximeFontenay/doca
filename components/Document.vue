@@ -17,26 +17,41 @@ const PDFName = computed(() => {
 const generatePDF = async () => {
   if (PDFDocument.value) {
     try {
-      const scale = 1
+      const scale = 3;
       const canvas = await html2canvas(PDFDocument.value, {
         scale: scale,
-        //useCORS: true, // Pour gérer les images de domaine croisé si nécessaire
-      });
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        // putOnlyUsedFonts: true,
-        unit: 'px',
-        // format: [canvas.width, canvas.height],
+        logging: false,
+        //allowTaint: true,
+        // useCORS: true,
+
       });
 
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      pdf.save(PDFName.value);
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const img = new Image();
+          img.onload = () => {
+            const pdfWidth = 595.28;
+            const pdfHeight = (img.height * pdfWidth) / img.width;
+            const pdf = new jsPDF({
+              orientation: 'portrait',
+              unit: 'pt',
+              format: [pdfWidth, pdfHeight],
+              compress: true,
+            });
+
+            pdf.addImage(img, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'SLOW');
+            pdf.save(PDFName.value);
+            URL.revokeObjectURL(url);
+          };
+          const url = URL.createObjectURL(blob);
+          img.src = url;
+        }
+      }, 'image/jpeg', 0.7);
     } catch (error) {
       console.error('Erreur lors de la génération du PDF', error);
     }
   }
-}
+};
 
 const sirenFormat = (siren: string) => {
   return siren.replace(/(\d{3})(\d{3})(\d{3})/, '$1\u00A0$2\u00A0$3')
@@ -95,10 +110,12 @@ const stopDrag = () => {
   isDragging.value = false;
 };
 
+const boardContainer = ref<HTMLElement | null>(null);
+
 onMounted(() => {
   window.addEventListener('mousemove', drag);
   window.addEventListener('mouseup', stopDrag);
-  window.addEventListener('wheel', (e) => {
+  boardContainer.value?.addEventListener('wheel', (e) => {
     if (e.deltaY > 0) {
       zoomOut();
     } else {
@@ -110,12 +127,13 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('mousemove', drag);
   window.removeEventListener('mouseup', stopDrag);
+  boardContainer.value?.removeEventListener('mouseup', stopDrag);
 });
 </script>
 
 <template>
   <div class="relative w-full h-full select-none">
-    <div class="board-container">
+    <div class="board-container" ref="boardContainer">
       <article ref="PDFDocument"
         :style="{ transform: `translate(${translateX}px, ${translateY}px) scale(${getZoomValue / 100})` }"
         @mousedown="startDrag" class="text-xxs font-medium bg-light text-black h-full board p-2">
@@ -180,7 +198,9 @@ onBeforeUnmount(() => {
               <td class="cell !text-left">
                 <h3 class="font-bold underline mb-1">{{ prestation.name }}</h3>
                 <ul class="pl-6 list-disc">
-                  <li v-for="(detail, detailIndex) in prestation.details" :key="detailIndex">{{ detail }}</li>
+                  <template v-for="(detail, detailIndex) in prestation.details" :key="detailIndex">
+                    <li v-if="detail.length">{{ detail }}</li>
+                  </template>
                 </ul>
               </td>
               <td class="cell">{{ prestation.quantity }}

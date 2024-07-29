@@ -46,7 +46,9 @@ const saveToLocalStorage = () => {
             <li v-for="(detail, detailIndex) in prestation.details" :key="'detail' + detailIndex" class="flex gap-2">
               <UInput :value="detail" v-model="prestation.details[detailIndex]"
                 :placeholder="`Détail ${detailIndex + 1}`" class="grow" @blur="saveToLocalStorage" />
-              <UButton @click="prestationStore.removeDetail(prestationIndex, detailIndex)" icon="i-ph-trash" />
+              <UTooltip text="Supprimer le détail" :popper="{ placement: 'top' }">
+                <UButton @click="prestationStore.removeDetail(prestationIndex, detailIndex)" icon="i-ph-trash" />
+              </UTooltip>
             </li>
           </ol>
         </UFormGroup>
