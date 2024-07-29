@@ -9,7 +9,7 @@ export const useClientStore = defineStore('clientStore', () => {
       city: '',
       postalCode: '',
     },
-    siren: null,
+    siren: '',
     TVA: {
       number: '',
       intracom: false,
