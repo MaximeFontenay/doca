@@ -11,7 +11,7 @@ export const useUserStore = defineStore('userStore', () => {
       city: '',
       postalCode: '',
     },
-    siret: '',
+    siren: '',
     website: '',
     logo: '',
   })

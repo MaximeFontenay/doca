@@ -6,7 +6,7 @@ export interface ClientDatas {
     city: string
     postalCode: string
   }
-  siret: string
+  siren: string
   TVA: {
     number: string
     intracom: boolean

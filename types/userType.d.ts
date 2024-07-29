@@ -8,7 +8,7 @@ export interface UserDatas {
     city: string
     postalCode: string
   }
-  siret: string
+  siren: string
   website: string
   logo: string
 }

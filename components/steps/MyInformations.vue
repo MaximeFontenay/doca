@@ -39,14 +39,14 @@ const saveToLocalStorage = () => {
           </li>
         </ul>
       </UFormGroup>
-      <UFormGroup label="N° SIRET" required>
+      <UFormGroup label="N° Siren" required>
         <template #hint>
           <div class="flex gap-1 items-center">
             <span class="text-xxs">9 chiffres</span>
             <UIcon name="i-ph-info" size="12" />
           </div>
         </template>
-        <UInput v-model="userStore.datas.siret" placeholder="000 000 000 00000" @input="filterNonNumeric"
+        <UInput v-model="userStore.datas.siren" placeholder="000 000 000" @input="filterNonNumeric"
           @blur="saveToLocalStorage" />
       </UFormGroup>
       <UFormGroup label="Site internet">
