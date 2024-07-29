@@ -1,4 +1,4 @@
-import appConfig from '@/app.config';
+import appConfig from '@/app.config'
 
 export const useContractStore = defineStore('contractStore', () => {
   const datas = reactive({
@@ -10,3 +10,6 @@ export const useContractStore = defineStore('contractStore', () => {
 
   return { datas }
 })
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useContractStore, import.meta.hot))
+}

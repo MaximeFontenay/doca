@@ -18,3 +18,7 @@ export const useClientStore = defineStore('clientStore', () => {
 
   return { datas }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useClientStore, import.meta.hot))
+}

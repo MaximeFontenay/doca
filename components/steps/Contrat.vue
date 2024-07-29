@@ -15,12 +15,9 @@ const selectedType = ref(items[selectedTypeIndex.value]);
 const changeContractType = (index: number) => {
   selectedType.value = items[index];
   contractStore.datas.type = items[index].label;
-  saveToLocalStorage();
+  saveToLocalStorage('contractStore', contractStore.datas);
 };
 
-const saveToLocalStorage = () => {
-  localStorage.setItem('contractStore', JSON.stringify(contractStore.datas));
-};
 </script>
 <template>
   <div class="w-full">
@@ -40,7 +37,7 @@ const saveToLocalStorage = () => {
       <UFormGroup :label="`Numéro ${selectedType.sentence?.length ? selectedType.sentence : 'du document'}`" required>
         <UInput v-model="contractStore.datas.number"
           :placeholder="`Numéro ${selectedType.sentence?.length ? selectedType.sentence : 'du document'}`"
-          @blur="saveToLocalStorage" />
+          @blur="saveToLocalStorage('contractStore', contractStore.datas)" />
       </UFormGroup>
 
       <UFormGroup :label="`Date ${selectedType.sentence?.length ? selectedType.sentence : 'du document'}`" required>
@@ -56,7 +53,7 @@ const saveToLocalStorage = () => {
       <UFormGroup label="Couleur principale du document" required>
         <input type="color" v-model="contractStore.datas.color"
           class="flx-center h-8 outline outline-solid outline-1 -outline-offset-[4.5px] appearance-none bg-transparent cursor-pointer rounded-md overflow-clip px-0.5 -ml-0.5 w-[calc(100%+5px)] focus-visible:outline-primary"
-          @blur="saveToLocalStorage" />
+          @blur="saveToLocalStorage('contractStore', contractStore.datas)" />
       </UFormGroup>
     </div>
   </div>

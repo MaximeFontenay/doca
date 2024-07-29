@@ -3,23 +3,9 @@ const clientStore = useClientStore()
 
 const TVAIntracom = ref<boolean>(false)
 
-const saveToLocalStorage = () => {
-  localStorage.setItem('clientStore', JSON.stringify(clientStore.datas))
-}
-
-const loadFromLocalStorage = () => {
-  const savedInfos = localStorage.getItem('clientStore')
-  if (savedInfos) {
-    const parsedInfos = JSON.parse(savedInfos)
-    Object.assign(clientStore.datas, parsedInfos)
-  }
-}
-
-onMounted(loadFromLocalStorage)
-
 const toggleTVAIntracom = () => {
   clientStore.datas.TVA.intracom = !clientStore.datas.TVA.intracom
-  saveToLocalStorage()
+  saveToLocalStorage('clientStore', clientStore.datas)
 }
 </script>
 
@@ -28,22 +14,26 @@ const toggleTVAIntracom = () => {
     <h2 class="font-bold text-gray-600 dark:text-gray-200 text-xl">Informations du client</h2>
     <div class="flex flex-col gap-4 mt-10 w-full">
       <UFormGroup required label="Nom du client">
-        <UInput v-model="clientStore.datas.name" placeholder="Jean Dupond, Google, ..." @blur="saveToLocalStorage" />
+        <UInput v-model="clientStore.datas.name" placeholder="Jean Dupond, Google, ..."
+          @blur="saveToLocalStorage('clientStore', clientStore.datas)" />
       </UFormGroup>
       <UFormGroup label="Email">
-        <UInput v-model="clientStore.datas.email" placeholder="client@example.com" @blur="saveToLocalStorage" />
+        <UInput v-model="clientStore.datas.email" placeholder="client@example.com"
+          @blur="saveToLocalStorage('clientStore', clientStore.datas)" />
       </UFormGroup>
       <UFormGroup label="Adresse du siège social" required>
         <ul class="flex flex-col gap-2">
           <li>
-            <UInput v-model="clientStore.datas.address.street" placeholder="Numéro et rue" @blur="saveToLocalStorage" />
+            <UInput v-model="clientStore.datas.address.street" placeholder="Numéro et rue"
+              @blur="saveToLocalStorage('clientStore', clientStore.datas)" />
           </li>
           <li>
-            <UInput v-model="clientStore.datas.address.city" placeholder="Ville" @blur="saveToLocalStorage" />
+            <UInput v-model="clientStore.datas.address.city" placeholder="Ville"
+              @blur="saveToLocalStorage('clientStore', clientStore.datas)" />
           </li>
           <li>
             <UInput v-model="clientStore.datas.address.postalCode" placeholder="Code postale"
-              @blur="saveToLocalStorage" />
+              @blur="saveToLocalStorage('clientStore', clientStore.datas)" />
           </li>
         </ul>
       </UFormGroup>
@@ -55,7 +45,7 @@ const toggleTVAIntracom = () => {
           </div>
         </template>
         <UInput v-model="clientStore.datas.siren" placeholder="000 000 000" @input="filterNonNumeric"
-          @blur="saveToLocalStorage" />
+          @blur="saveToLocalStorage('clientStore', clientStore.datas)" />
       </UFormGroup>
       <UFormGroup :label="`N° TVA ${TVAIntracom ? 'Intracom' : ''}`">
         <template #hint>
@@ -66,7 +56,8 @@ const toggleTVAIntracom = () => {
         </template>
         <ul class="flex flex-col gap-2">
           <li>
-            <UInput v-model="clientStore.datas.TVA.number" placeholder="FR00000000000" @blur="saveToLocalStorage" />
+            <UInput v-model="clientStore.datas.TVA.number" placeholder="FR00000000000"
+              @blur="saveToLocalStorage('clientStore', clientStore.datas)" />
           </li>
           <li class="flex gap-2 items-center select-none cursor-pointer w-fit" tabindex="0"
             @keydown.enter.space="toggleTVAIntracom" @click="toggleTVAIntracom">

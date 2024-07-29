@@ -1,9 +1,5 @@
 <script lang="ts" setup>
 const prestationStore = usePrestationStore()
-
-const saveToLocalStorage = () => {
-  localStorage.setItem('prestationStore', JSON.stringify(prestationStore.datas))
-}
 </script>
 
 <template>
@@ -16,7 +12,8 @@ const saveToLocalStorage = () => {
       </template>
       <UFormGroup label="Nom de l'unité" required>
         <UInputMenu v-model="prestationStore.datas.unitType" :options="prestationStore.unitTypes" value-attribute="unit"
-          option-attribute="label" placeholder="Prix unitaires" @change="saveToLocalStorage" />
+          option-attribute="label" placeholder="Prix unitaires"
+          @change="saveToLocalStorage('prestationStore', prestationStore.datas)" />
       </UFormGroup>
     </UFormGroup>
 
@@ -28,24 +25,26 @@ const saveToLocalStorage = () => {
 
       <div class="space-y-2">
         <UFormGroup label="Nom de la prestation" required>
-          <UInput v-model="prestation.name" placeholder="Réparation du site internet" @blur="saveToLocalStorage" />
+          <UInput v-model="prestation.name" placeholder="Réparation du site internet"
+            @blur="saveToLocalStorage('prestationStore', prestationStore.datas)" />
         </UFormGroup>
 
         <UFormGroup label="Prix unitaire" required>
           <UInput v-model="prestation.price" placeholder="50" type="number" trailing-icon="i-ph-currency-eur"
-            @input="filterNonNumeric" @blur="saveToLocalStorage" />
+            @input="filterNonNumeric" @blur="saveToLocalStorage('prestationStore', prestationStore.datas)" />
         </UFormGroup>
 
         <UFormGroup :label="'Nombre de ' + prestationStore.getUnitLabel()?.toLowerCase()" required>
           <UInput v-model="prestation.quantity" placeholder="4" type="number" trailing-icon="i-ph-stack"
-            @input="filterNonNumeric" @blur="saveToLocalStorage" />
+            @input="filterNonNumeric" @blur="saveToLocalStorage('prestationStore', prestationStore.datas)" />
         </UFormGroup>
 
         <UFormGroup class="flex flex-col w-full" label="Détails">
           <ol class="space-y-2">
             <li v-for="(detail, detailIndex) in prestation.details" :key="'detail' + detailIndex" class="flex gap-2">
               <UInput :value="detail" v-model="prestation.details[detailIndex]"
-                :placeholder="`Détail ${detailIndex + 1}`" class="grow" @blur="saveToLocalStorage" />
+                :placeholder="`Détail ${detailIndex + 1}`" class="grow"
+                @blur="saveToLocalStorage('prestationStore', prestationStore.datas)" />
               <UTooltip text="Supprimer le détail" :popper="{ placement: 'top' }">
                 <UButton @click="prestationStore.removeDetail(prestationIndex, detailIndex)" icon="i-ph-trash" />
               </UTooltip>

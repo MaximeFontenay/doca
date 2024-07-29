@@ -68,3 +68,7 @@ export const usePrestationStore = defineStore('prestationStore', () => {
     getTotal,
   }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(usePrestationStore, import.meta.hot))
+}
