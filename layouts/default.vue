@@ -2,14 +2,10 @@
 const globalStore = useGlobalStore()
 
 onBeforeMount(() => {
-  console.log('unmounted')
-  console.log(usePinia());
   globalStore.datas.loaded = false;
 })
 
 onMounted(() => {
-  console.log('mounted')
-  console.log(usePinia());
   globalStore.datas.loaded = true;
 })
 </script>
@@ -18,7 +14,7 @@ onMounted(() => {
   <div>
     <Transition>
       <div v-if="globalStore.datas.loaded">
-        <slot />
+        <NuxtPage />
       </div>
     </Transition>
 

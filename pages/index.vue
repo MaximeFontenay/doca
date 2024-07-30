@@ -150,6 +150,7 @@ const toggleSidebar = () => {
       </section>
     </div>
   </div>
+
 </template>
 
 <style lang="scss"></style>

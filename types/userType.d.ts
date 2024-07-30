@@ -10,5 +10,5 @@ export interface UserDatas {
   }
   siren: string
   website: string
-  logo: string
+  logo: ArrayBuffer | string
 }

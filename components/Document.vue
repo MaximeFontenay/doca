@@ -79,7 +79,6 @@ const zoomOut = () => {
   }
 }
 
-
 // Variables pour le drag
 const isDragging = ref(false);
 const dragStartX = ref(0);
@@ -148,6 +147,10 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- informations -->
+        <div v-if="userStore.datas.logo" class="flex justify-start items-end size-20 mb-4">
+          <img :src="userStore.datas.logo as string" alt="User Logo" class="object-contain w-full" />
+        </div>
+
         <div class="w-full flex justify-between mb-6">
           <div class="flex flex-col gap-1">
             <h2 class="font-bold">

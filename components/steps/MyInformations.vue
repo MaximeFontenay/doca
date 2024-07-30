@@ -1,5 +1,25 @@
 <script lang="ts" setup>
 const userStore = useUserStore()
+
+const handleFileChange = (event: FileList) => {
+  const file = event[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        userStore.datas.logo = e.target.result;
+        console.log(userStore.datas.logo);
+        saveToLocalStorage('userStore', userStore.datas);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const removeLogo = () => {
+  userStore.datas.logo = '';
+  saveToLocalStorage('userStore', userStore.datas);
+};
 </script>
 
 <template>
@@ -55,8 +75,12 @@ const userStore = useUserStore()
           @blur="saveToLocalStorage('userStore', userStore.datas)" />
       </UFormGroup>
       <UFormGroup label="Logo">
-        <UInput v-model="userStore.datas.logo" type="file" placeholder="www.example.com" size="sm"
-          icon="i-heroicons-folder" @blur="saveToLocalStorage('userStore', userStore.datas)" />
+        <div class="flex gap-2">
+          <UInput type="file" icon="i-ph-file-png" class="grow" @change="handleFileChange" />
+          <UTooltip text="Supprimer le logo" :popper="{ placement: 'top' }">
+            <UButton @click="removeLogo" icon="i-ph-trash" />
+          </UTooltip>
+        </div>
       </UFormGroup>
     </div>
   </div>
