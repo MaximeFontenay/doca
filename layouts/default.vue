@@ -19,9 +19,8 @@ onMounted(() => {
     </Transition>
 
     <Transition>
-      <div v-if="!globalStore.datas.loaded" class="absolute-center flx-center flex-col gap-2 max-w-56 mx-auto">
-        <p>Chargement</p>
-        <UProgress animation="carousel" size="sm" />
+      <div v-if="!globalStore.datas.loaded">
+        <Loading />
       </div>
     </Transition>
   </div>

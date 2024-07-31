@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-10',
-
   app: {
     head: {
       title: 'Dashuxt',
@@ -26,20 +25,35 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@nuxt/eslint',
-    // '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@nuxt/ui',
     '@sidebase/nuxt-pdf',
+    '@nuxtjs/supabase',
   ],
+
   colorMode: {
     preference: 'dark',
   },
+
   // eslint: {
   //   config: {
   //     stylistic: true,
   //   },
   // },
+
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+  },
+
+  redirectOptions: {
+    login: '/login',
+    callback: '/confirm',
+    include: undefined,
+    exclude: [],
+    cookieRedirect: false,
+  },
 
   pinia: {
     storesDirs: ['./stores/**'],
