@@ -11,17 +11,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <Transition>
-      <div v-if="globalStore.datas.loaded">
-        <NuxtPage />
-      </div>
-    </Transition>
+  <Transition>
+    <div v-if="globalStore.datas.loaded" class="min-h-svh">
+      <NuxtPage />
+    </div>
+  </Transition>
 
-    <Transition>
-      <div v-if="!globalStore.datas.loaded">
-        <Loading />
-      </div>
-    </Transition>
-  </div>
+  <Transition>
+    <div v-if="!globalStore.datas.loaded">
+      <Loading />
+    </div>
+  </Transition>
 </template>
