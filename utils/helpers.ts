@@ -8,8 +8,8 @@ export const saveToLocalStorage = (storeName: string, data: object) => {
   console.log('save')
 }
 
-const client = useSupabaseClient()
-export const logout = async () => {
-  await client.auth.signOut()
-  navigateTo('/')
-}
+// const client = useSupabaseClient()
+// export const logout = async () => {
+//   await client.auth.signOut()
+//   navigateTo('/')
+// }

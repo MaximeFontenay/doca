@@ -1,0 +1,84 @@
+{
+  "projets": [
+    {
+      "id": 1,
+      "nom": "Projet Alpha",
+      "client": "Client A",
+      "montant": 10000,
+      "statusDuDevis": "en attente",
+      "statutDeLaFacture": "en attente"
+    },
+    {
+      "id": 2,
+      "nom": "Projet Beta",
+      "client": "Client B",
+      "montant": 15000,
+      "statusDuDevis": "envoyé",
+      "statutDeLaFacture": "envoyée"
+    },
+    {
+      "id": 3,
+      "nom": "Projet Gamma",
+      "client": "Client C",
+      "montant": 20000,
+      "statusDuDevis": "signé",
+      "statutDeLaFacture": "payée"
+    },
+    {
+      "id": 4,
+      "nom": "Projet Delta",
+      "client": "Client D",
+      "montant": 25000,
+      "statusDuDevis": "en attente",
+      "statutDeLaFacture": "en attente"
+    },
+    {
+      "id": 5,
+      "nom": "Projet Epsilon",
+      "client": "Client E",
+      "montant": 30000,
+      "statusDuDevis": "envoyé",
+      "statutDeLaFacture": "envoyée"
+    },
+    {
+      "id": 6,
+      "nom": "Projet Zeta",
+      "client": "Client F",
+      "montant": 35000,
+      "statusDuDevis": "signé",
+      "statutDeLaFacture": "payée"
+    },
+    {
+      "id": 7,
+      "nom": "Projet Eta",
+      "client": "Client G",
+      "montant": 40000,
+      "statusDuDevis": "en attente",
+      "statutDeLaFacture": "en attente"
+    },
+    {
+      "id": 8,
+      "nom": "Projet Theta",
+      "client": "Client H",
+      "montant": 45000,
+      "statusDuDevis": "envoyé",
+      "statutDeLaFacture": "envoyée"
+    },
+    {
+      "id": 9,
+      "nom": "Projet Iota",
+      "client": "Client I",
+      "montant": 50000,
+      "statusDuDevis": "signé",
+      "statutDeLaFacture": "payée"
+    },
+    {
+      "id": 10,
+      "nom": "Projet Kappa",
+      "client": "Client J",
+      "montant": 55000,
+      "statusDuDevis": "en attente",
+      "statutDeLaFacture": "en attente"
+    }
+  ]
+}
