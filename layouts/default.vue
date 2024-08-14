@@ -12,13 +12,13 @@ onMounted(() => {
 
 <template>
   <Transition>
-    <div v-if="globalStore.datas.loaded" class="min-h-svh">
+    <div v-show="globalStore.datas.loaded" class="min-h-svh">
       <NuxtPage />
     </div>
   </Transition>
 
   <Transition>
-    <div v-if="!globalStore.datas.loaded">
+    <div v-show="!globalStore.datas.loaded">
       <Loading />
     </div>
   </Transition>

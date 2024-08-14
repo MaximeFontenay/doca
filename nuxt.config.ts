@@ -47,13 +47,13 @@ export default defineNuxtConfig({
     key: process.env.SUPABASE_KEY,
   },
 
-  redirectOptions: {
-    login: '/login',
-    callback: '/confirm',
-    include: undefined,
-    exclude: [],
-    cookieRedirect: false,
-  },
+  // redirectOptions: {
+  //   login: '/login',
+  //   callback: '/confirm',
+  //   include: undefined,
+  //   exclude: [],
+  //   cookieRedirect: false,
+  // },
 
   pinia: {
     storesDirs: ['./stores/**'],

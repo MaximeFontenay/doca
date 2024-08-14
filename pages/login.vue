@@ -1,43 +1,64 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '#ui/types';
-import { object, string, type InferType } from 'yup';
+const supabase = useSupabaseClient()
 
-const schema = object({
-  email: string().email('Email est invalide').required('Champs requis'),
-  password: string()
-    .min(8, 'Le mot de passe doit faire un minimum de 8 caractères')
-    .required('Champs requis')
-})
+const email = ref<string>('')
+const errorMessage = ref<string>('')
+const emailSent = ref<boolean>(false)
 
-type Schema = InferType<typeof schema>
+const signInWithOtp = async () => {
+  try {
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.value,
+    })
 
-const user = reactive({
-  email: undefined,
-  password: undefined
-})
+    if (error) {
+      throw new Error(error.message);
+    }
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-  // Do something with event.data
-  console.log(event.data)
+  } catch (err: any) {
+    errorMessage.value = err.message || 'Une erreur est survenue';
+  }
+
+  emailSent.value = true
 }
+
+const signInWithOAuth = async () => {
+  try {
+    const { error: signInError } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+
+    if (signInError) {
+      throw new Error(signInError.message);
+    }
+
+  } catch (err: any) {
+    errorMessage.value = err.message || 'Une erreur est survenue';
+  }
+}
+
 </script>
 
 <template>
   <div class="my-40 mx-auto max-w-96 w-full space-y-6">
     <h1>Connexion</h1>
-    <UForm :schema="schema" :user="user" class="w-full space-y-4" @submit="onSubmit">
-      <UFormGroup label="Email" name="email">
-        <UInput v-model="user.email" />
-      </UFormGroup>
 
-      <UFormGroup label="Mot de passe" name="password">
-        <UInput v-model="user.password" type="password" />
-      </UFormGroup>
+    <UFormGroup label="Email" name="email">
+      <UInput v-model="email" type="email" placeholder="email@me.com" equired />
+    </UFormGroup>
 
-      <div class="mx-auto w-full border-t border-primary-800 !mt-6 pt-6">
-        <UButton label="Connexion" block size="md" />
-      </div>
-    </UForm>
+    <div class="mx-auto w-full border-t border-primary-800 !mt-6 pt-6">
+      <UButton :label="emailSent ? 'Vérifiez votre boite mail pour continuer' : 'Connexion avec email'" block size="md"
+        :disabled="!email || emailSent" @click="signInWithOtp" />
+    </div>
+
+    <p v-if="errorMessage" class="text-red-400 text-sm">{{ errorMessage }}</p>
+
+
+    <div class="">
+      <UButton label="Connexion avec Google" block size="md" @click="signInWithOAuth" />
+    </div>
   </div>
-
 </template>
+
+<style lang="scss" scoped></style>
