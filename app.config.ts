@@ -21,6 +21,7 @@ export default defineAppConfig({
       },
     },
     button: {
+      base: 'select-none duration-200',
       default: { variant: 'soft', color: 'primary' },
       variant: {
         ghost:
@@ -68,6 +69,6 @@ export default defineAppConfig({
         size: 'text-xxs',
       },
       tbody: 'divide-none',
-    }
+    },
   },
 })

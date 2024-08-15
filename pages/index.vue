@@ -3,6 +3,8 @@ useSeoMeta({
   title: 'Home',
 })
 
+
+
 const colorMode = useColorMode()
 const isDark = computed({
   get() {
@@ -123,6 +125,13 @@ const toggleSidebar = () => {
           <ClientOnly>
             <UTooltip text="Supprimer tous les champs">
               <UButton icon="i-ph-trash" aria-label="Clean local storage" @click="clearLocalStorage" />
+            </UTooltip>
+          </ClientOnly>
+          <ClientOnly>
+            <UTooltip text="Mon compte">
+              <ULink aria-label="Account" to="/account">
+                <UButton icon="i-ph-user" aria-label="Account" />
+              </ULink>
             </UTooltip>
           </ClientOnly>
         </div>
