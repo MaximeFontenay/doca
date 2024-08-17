@@ -52,12 +52,13 @@ const signInWithOAuth = async () => {
   }
 }
 
-watchEffect(() => {
+const redirectUser = () => {
   if (user.value) {
     navigateTo('/dashboard');
   }
-});
+}
 
+watchEffect(() => redirectUser());
 </script>
 
 <template>

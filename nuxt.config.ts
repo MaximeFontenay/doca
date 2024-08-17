@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-10',
   app: {
     head: {
-      title: 'Dashuxt',
+      title: 'Doca',
       charset: 'utf-8',
       htmlAttrs: { lang: 'fr', class: 'custom-scrollbar' },
       bodyAttrs: {
@@ -18,9 +18,9 @@ export default defineNuxtConfig({
   css: ['@/assets/styles/main.scss'],
 
   imports: {
-    dirs: ['types/*.d.ts', 'store/*.ts', 'types/**/*.ts', 'utils/**/*.ts'],
+    dirs: ['types', 'stores', 'utils', 'composables', 'components'],
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 
   modules: [
     '@nuxt/image',

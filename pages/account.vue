@@ -19,6 +19,13 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <ClientOnly>
+    <UTooltip text="Revenir au dashboard">
+      <ULink to="/dashboard">
+        <UButton icon="i-ph-arrow-left" aria-label="back" />
+      </ULink>
+    </UTooltip>
+  </ClientOnly>
   <div class="flex flex-col justify-center items-stretch h-svh w-full relative">
     <div v-if="user"
       class="flex flex-col gap-4 p-4 max-w-[300px] min-w-fit w-full mx-auto border border-primary-800/80 rounded-md">

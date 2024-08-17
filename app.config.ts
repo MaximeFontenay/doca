@@ -57,18 +57,21 @@ export default defineAppConfig({
       th: {
         base: 'whitespace-nowrap',
         padding: 'px-4 py-3.5',
-        color: 'text-primary',
-        font: 'font-semibold',
-        size: 'text-xxs',
+        color: '',
+        font: 'font-normal',
+        size: 'text-sm',
       },
       td: {
-        base: 'whitespace-nowrap',
-        padding: 'px-4 py-4',
-        color: 'text-[#1f1f1f]',
+        base: 'whitespace-nowrap border border-gray-200 dark:border-gray-800',
+        padding: 'p-2',
+        color: 'text-white',
         font: '',
         size: 'text-xxs',
       },
       tbody: 'divide-none',
+    },
+    link: {
+      base: 'text-primary-300 duration-200 select-none',
     },
   },
 })

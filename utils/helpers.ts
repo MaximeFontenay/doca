@@ -5,7 +5,7 @@ export const filterNonNumeric = (event: Event) => {
 
 export const saveToLocalStorage = (storeName: string, data: object) => {
   localStorage.setItem(storeName, JSON.stringify(data))
-  console.log('save')
+  console.log('save' + storeName)
 }
 
 // const client = useSupabaseClient()

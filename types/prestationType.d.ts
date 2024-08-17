@@ -6,8 +6,7 @@ export interface UnitType {
 export interface Prestation {
   name: string
   details: string[]
-  price: string
-  quantity: string
+
   total: string
 }
 

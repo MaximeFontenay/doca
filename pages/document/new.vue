@@ -1,0 +1,112 @@
+<script lang="ts" setup>
+useSeoMeta({
+  title: 'Home',
+})
+
+const contractStore = useContractStore();
+const clientStore = useClientStore();
+const userStore = useUserStore();
+const prestationStore = usePrestationStore();
+
+const currentStep = ref<number>(1)
+
+const steps = [
+  {
+    id: 1,
+    name: 'Contrat',
+    icon: 'i-ph-file-text',
+  },
+  {
+    id: 2,
+    name: 'Mes informations',
+    icon: 'i-ph-user-circle',
+  },
+  {
+    id: 3,
+    name: 'Informations du client',
+    icon: 'i-ph-identification-badge',
+  },
+  {
+    id: 4,
+    name: 'Prestations',
+    icon: 'i-ph-target',
+  },
+]
+
+const changeStep = (step: number) => {
+  currentStep.value = step
+  localStorage.setItem('currentStep', JSON.stringify(step))
+}
+
+const foldedSidebar = ref<boolean>(false);
+
+const foldedSidebarUpdate = (value: boolean) => {
+  foldedSidebar.value = value;
+};
+
+const loadFromLocalStorage = (store: any, key: string) => {
+  const savedInfos = localStorage.getItem(key);
+  if (savedInfos) {
+    const parsedInfos = JSON.parse(savedInfos);
+    Object.assign(store.datas, parsedInfos);
+  }
+};
+
+onMounted(() => {
+  const savedStep = localStorage.getItem('currentStep')
+  if (savedStep) {
+    currentStep.value = JSON.parse(savedStep)
+  }
+
+  loadFromLocalStorage(contractStore, 'contractStore');
+  loadFromLocalStorage(clientStore, 'clientStore');
+  loadFromLocalStorage(userStore, 'userStore');
+  loadFromLocalStorage(prestationStore, 'prestationStore');
+})
+
+</script>
+
+<template>
+  <div class="flex items-stretch h-svh w-full relative">
+    <div class="flex items-stretch w-full">
+      <section ref="sidebar"
+        class="relative z-30 duration-500 bg-gray-50 dark:bg-gray-800 p-4 flex items-center flex-col max-w-60"
+        :class="foldedSidebar ? 'w-fit' : 'w-full min-w-52'">
+        <h1>{{ foldedSidebar ? 'D' : 'DOCA' }}</h1>
+        <ol class="mt-10 flex justify-center flex-col gap-4 w-full">
+          <li v-for="step in steps" :key="step.id">
+            <UButton @click="changeStep(step.id)" :label="!foldedSidebar ? step.name : ''"
+              :icon="foldedSidebar ? step.icon : ''" :variant="currentStep === step.id ? 'solid' : 'soft'" size="md"
+              tabindex=" 0" class="w-full text-center flx-center cursor-pointer py-2 duration-200 hover:opacity-70"
+              :class="currentStep === step.id ? 'pointer-events-none' : ''" />
+          </li>
+        </ol>
+        <SidebarMenu @foldedSidebar="foldedSidebarUpdate" />
+      </section>
+      <section
+        class="relative z-20 duration-500 bg-gray-50 dark:bg-gray-800 border-x border-primary-400/20 pt-8 pb-4 px-6 flex items-center flex-col w-full min-w-64 max-w-96 max-h-svh overflow-y-auto shadow-2xl custom-scrollbar">
+        <KeepAlive>
+          <StepsContrat v-show="currentStep === 1" />
+        </KeepAlive>
+        <KeepAlive>
+          <StepsMyInformations v-show="currentStep === 2" />
+        </KeepAlive>
+        <KeepAlive>
+          <StepsClientInformations v-show="currentStep === 3" />
+        </KeepAlive>
+        <KeepAlive>
+          <StepsPrestations v-show="currentStep === 4" />
+        </KeepAlive>
+        <div class="mt-auto ml-auto" v-if="currentStep < steps.length">
+          <UButton label="Suivant" variant="ghost" class="mt-4" @click="currentStep++" />
+        </div>
+      </section>
+      <section class="relative z-30 duration-500 bg-gray-300 dark:bg-gray-900 flx-center flex-col flex-grow">
+        <Document />
+      </section>
+    </div>
+  </div>
+
+</template>
+
+<style lang="scss"></style>

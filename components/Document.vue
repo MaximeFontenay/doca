@@ -244,7 +244,7 @@ onBeforeUnmount(() => {
     </template>
     <template v-if="PDFDocument">
       <UButton @click="generatePDF" label="Télécharger le PDF" trailing-icon="i-ph-download"
-        :title="'Télécharger ' + PDFName" class="absolute bottom-4 right-4" />
+        :title="'Télécharger ' + PDFName" class="absolute bottom-4 right-4" size="xl" />
     </template>
   </div>
 </template>
