@@ -8,7 +8,6 @@ const emailSent = ref<boolean>(false)
 const loading = ref<boolean>(false)
 
 const signInWithOtp = async () => {
-  console.log('signInWithOtp');
   loading.value = true;
 
   try {

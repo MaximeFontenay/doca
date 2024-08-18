@@ -1,40 +1,8 @@
 <script setup lang="ts">
+import type { Project } from '@/types/projectType';
+
 const client = useSupabaseClient()
 const user = useSupabaseUser()
-
-const projects = ref<Project[]>([])
-
-onMounted(async () => {
-  if (user.value) {
-    try {
-      const { data, error } = await client
-        .from('projects')
-        .select(`
-          id,
-          name,
-          amount,
-          end_date,
-          invoice_status,
-          client:clients (
-            name
-          )
-        `)
-        .order('created_at', { ascending: false })
-        .limit(5)
-
-      if (error) throw error
-
-      projects.value = data.map((project: any) => ({
-        ...project,
-        client: project.client.name, // Correctement assigner le nom du client
-        endDate: project.end_date, // Utiliser le nom correct de la colonne
-        invoiceStatus: project.invoice_status
-      })) as Project[]
-    } catch (err) {
-      console.error('Unable to load projects:', err)
-    }
-  }
-})
 
 onBeforeMount(() => {
   if (!user.value) {
@@ -42,10 +10,56 @@ onBeforeMount(() => {
   }
 })
 
-const getAllClients = () => {
-  const clients = projects.value.map((project: Project) => project.client);
-  return Array.from(new Set(clients));
-};
+const projects = ref<Project[]>([])
+const clients = ref<Client[]>([])
+
+onMounted(async () => {
+  if (user.value) {
+    try {
+      const { data: projectsData, error: projectsError } = await client
+        .from('projects')
+        .select(`
+          id,
+          name,
+          client_id,
+          start_date
+        `)
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      if (projectsError) throw projectsError
+
+      projects.value = projectsData
+
+      const clientIds = projectsData.map((project: Project) => project.client_id)
+      const uniqueClientIds = Array.from(new Set(clientIds))
+
+      console.log(uniqueClientIds)
+
+      if (uniqueClientIds.length > 0) {
+        const { data: clientsData, error: clientsError } = await client
+          .from('clients')
+          .select(`
+            id,
+            name
+          `)
+          .in('id', uniqueClientIds) 
+
+        if (clientsError) throw clientsError
+
+        clients.value = clientsData
+      }
+
+
+
+    } catch (err) {
+      console.error('Unable to load projects or clients:', err)
+    }
+
+    console.log('projects', projects.value)
+    console.log('clients', clients.value)
+  }
+})
 
 const columns = [
   {
@@ -70,53 +84,15 @@ const columns = [
     label: 'Statut'
   },
 ]
-
-const calculateMonthlyStats = async () => {
-  const { data, error } = await client
-    .from('projects')
-    .select('amount, created_at')
-    .gte('created_at', new Date(new Date().getFullYear(), 0, 1).toISOString())
-
-  if (error) {
-    console.error('Error fetching project data:', error)
-    return []
-  }
-
-  const months = ['jan', 'fév', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'dec']
-  const monthlyStats = months.map(month => ({ month, ca: 0, value: 0 }))
-
-  data.forEach(project => {
-    const month = new Date(project.created_at).getMonth()
-    monthlyStats[month].ca += project.amount
-  })
-
-  const maxCA = Math.max(...monthlyStats.map(stat => stat.ca))
-  monthlyStats.forEach(stat => {
-    stat.value = maxCA > 0 ? (stat.ca / maxCA) * 100 : 0
-  })
-
-  return monthlyStats
-}
-
-const stats = ref([])
-
-onMounted(async () => {
-  try {
-    stats.value = await calculateMonthlyStats()
-  } catch (error) {
-    console.error('Error calculating monthly stats:', error)
-  }
-})
-
 </script>
 
 <template>
   <div class="w-full p-10">
 
     <ul class="flx-center gap-2">
-      <li v-for="(client, clientIndex) in getAllClients()" :key="clientIndex">
+      <!-- <li v-for="(client, clientIndex) in getAllClients()" :key="clientIndex">
         {{ client }}
-      </li>
+      </li> -->
     </ul>
 
     <div class="">
@@ -125,7 +101,7 @@ onMounted(async () => {
         <UTable :columns="columns" :rows="projects" />
       </div>
     </div>
-
+<!-- 
     <div class="w-fit">
       <div class="bg-dark-100 rounded-lg px-4 py-3 w-fit relative z-10 shadow-lg shadow-dark-200">
         <h2 class="text-primary-300 mb-8">Statistiques</h2>
@@ -148,7 +124,7 @@ onMounted(async () => {
         <p><span class="text-sm">Total :</span> <span class="text-primary-300 font-bold">{{ stats.reduce((sum, stat) =>
           sum + stat.ca, 0).toFixed(2) }}<span class="text-xs font-medium">&nbsp;€</span></span></p>
       </div>
-    </div>
+    </div> -->
 
     <div class="absolute bottom-4 right-2">
       <ULink to="/document/new" class="text-primary-300">
